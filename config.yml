@@ -1,0 +1,34 @@
+# Here you can toogle the components of ResExtras. 
+# Disable them to save resources and increase performance of the plugin.
+
+melt: true
+form: true
+drops: true
+pickup: true
+animalkilling: true
+mobkilling: true
+enderpearl: true
+commands: true
+vehicleprotect: true
+shear: true
+trade: true
+# Prevent item frame destroying exploit even if player cannot destroy.
+frameprotect: true
+
+# Type none to disable message.
+# Use %prefix for prefix specified below.
+
+messages:
+  animalkilling: "%prefix You cannot kill animals here!"
+  mobkilling: "%prefix You cannot kill monsters here!"
+  villagerkilling: "%prefix You cannot kill villagers here!"
+  commands: "%prefix You cannot use commands here!"
+  drops: "%prefix You cannot drop items here!"
+  pickup: none
+  enderpearl: "%prefix You cannot use ender pearls here!"
+  shear: "%prefix You cannot shear here!"
+  trade: "%prefix You cannot trade here!"
+  vehicledestroy: "%prefix You cannot destroy vehicles here!"
+  frameprotect: "&cYou dont have permission for this."
+  
+prefix: "&4[&cResidence&4]&c"
