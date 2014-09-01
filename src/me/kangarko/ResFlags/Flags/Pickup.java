@@ -11,20 +11,16 @@ import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 
 public class Pickup implements Listener {
-
-	@EventHandler(ignoreCancelled=true)
+	@EventHandler(ignoreCancelled = true)
 	public void PickupItem(PlayerPickupItemEvent e) {
-
 		Player player = e.getPlayer();
 		boolean resadmin = Residence.isResAdminOn(player);
-		ClaimedResidence res = Residence.getResidenceManager().getByLoc(e.getItem().getLocation());		
+		ClaimedResidence res = Residence.getResidenceManager().getByLoc(e.getItem().getLocation());
 		String playername = player.getName();
-		
-		if (res != null) {
-			if (!res.getPermissions().playerHas(playername, "pickup", true) && !resadmin) {
-				ResFlags.sendMsg(player, "pickup");
-				e.setCancelled(true);
-			}
+
+		if (res != null && !res.getPermissions().playerHas(playername, "pickup", true) && !resadmin) {
+			ResFlags.sendMsg(player, "pickup");
+			e.setCancelled(true);
 		}
 	}
 }

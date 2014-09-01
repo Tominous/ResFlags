@@ -18,40 +18,38 @@ import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 
 public class AnimalKilling implements Listener {
 
-
-	@EventHandler(ignoreCancelled=true)
+	@EventHandler(ignoreCancelled = true)
 	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent e) {
-		
-		Player pl;
 		Entity damager = e.getDamager();
-		
-		if (!(damager instanceof Arrow) && !(damager instanceof Player)) {
-			return;
-		}
-		
-		if (damager instanceof Arrow && !(((Arrow) damager).getShooter() instanceof Player)) {
-			return;
-		} else if (damager instanceof Player) {
-			pl = (Player) damager;
-		} else {
-			pl = (Player) ((Arrow) damager).getShooter();
-		}
-		
-		if (Residence.isResAdminOn(pl)) {
-			return;
-		}
-		
 		Entity entity = e.getEntity();
-		ClaimedResidence res = Residence.getResidenceManager().getByLoc(entity.getLocation());
 
-		if (res != null && !res.getPermissions().playerHas(pl.getName().toString(), "animalkilling", true)) {
-			if (entity instanceof Animals || entity instanceof IronGolem || entity instanceof Snowman) {
-				ResFlags.sendMsg(pl, "animalkilling");
-				e.setCancelled(true);
-			} else if (entity instanceof Villager) {
-				ResFlags.sendMsg(pl, "villagerkilling");
-				e.setCancelled(true);
+		if (entity instanceof Animals || entity instanceof IronGolem || entity instanceof Snowman || entity instanceof Villager) {
+			if (!(damager instanceof Arrow) && !(damager instanceof Player))
+				return;
+
+			if (damager instanceof Arrow && !(((Arrow) damager).getShooter() instanceof Player))
+				return;
+
+			Player pl;
+			if (damager instanceof Player) {
+				pl = (Player) damager;
+			} else {
+				pl = (Player) ((Arrow) damager).getShooter();
 			}
+
+			if (Residence.isResAdminOn(pl))
+				return;
+
+			ClaimedResidence res = Residence.getResidenceManager().getByLoc(entity.getLocation());
+
+			if (res != null && !res.getPermissions().playerHas(pl.getName().toString(), "animalkilling", true))
+				if (entity instanceof Animals || entity instanceof IronGolem || entity instanceof Snowman) {
+					ResFlags.sendMsg(pl, "animalkilling");
+					e.setCancelled(true);
+				} else if (entity instanceof Villager) {
+					ResFlags.sendMsg(pl, "villagerkilling");
+					e.setCancelled(true);
+				}
 		}
 	}
 }

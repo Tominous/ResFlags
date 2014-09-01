@@ -11,17 +11,15 @@ import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 
 public class Shear implements Listener {
-
-
-	@EventHandler(ignoreCancelled=true)
+	
+	@EventHandler(ignoreCancelled = true)
 	public void onPlayerShearSheet(PlayerShearEntityEvent e) {
-		
 		Player player = e.getPlayer();
 		ClaimedResidence res = Residence.getResidenceManager().getByLoc(e.getPlayer().getLocation());
 		boolean resadmin = Residence.isResAdminOn(player);
 		String playername = player.getName();
-		
-		if (res != null && !res.getPermissions().playerHas(playername, "shear", true)&& !resadmin) {
+
+		if (res != null && !res.getPermissions().playerHas(playername, "shear", true) && !resadmin) {
 			ResFlags.sendMsg(e.getPlayer(), "shear");
 			e.setCancelled(true);
 		}

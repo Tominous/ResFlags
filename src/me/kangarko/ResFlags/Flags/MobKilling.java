@@ -14,38 +14,37 @@ import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 
 public class MobKilling implements Listener {
-
-	@EventHandler(ignoreCancelled=true)
+	
+	@EventHandler(ignoreCancelled = true)
 	public void Mobkilling(EntityDamageByEntityEvent e) {
-
-		Player player;
 		Entity damager = e.getDamager();
+		Entity entity = e.getEntity();
+
+		if (!(entity instanceof Monster))
+			return;
+		if (!(damager instanceof Arrow) && !(damager instanceof Player))
+			return;
+		if (damager instanceof Arrow && !(((Arrow) damager).getShooter() instanceof Player))
+			return;
 		
-		if (!(damager instanceof Arrow) && !(damager instanceof Player)) {
-			return;
-		}
-		if (damager instanceof Arrow && !(((Arrow) damager).getShooter() instanceof Player)) {
-			return;
-		} else if (damager instanceof Player) {
+		Player player;
+		
+		if (damager instanceof Player) {
 			player = (Player) damager;
 		} else {
 			player = (Player) ((Arrow) damager).getShooter();
 		}
-		
+
 		boolean resadmin = Residence.isResAdminOn(player);
-		
-		if (resadmin) {
+
+		if (resadmin)
 			return;
-		}
-		
-		Entity entity = e.getEntity();
+
 		ClaimedResidence res = Residence.getResidenceManager().getByLoc(entity.getLocation());
 
-		if (res != null && !res.getPermissions().playerHas(player.getName().toString(), "mobkilling", true)) {
-			if (entity instanceof Monster) {
-				ResFlags.sendMsg(player, "mobkilling");
-				e.setCancelled(true);
-			}
+		if (res != null && !res.getPermissions().playerHas(player.getName().toString(), "mobkilling", true) && entity instanceof Monster) {
+			ResFlags.sendMsg(player, "mobkilling");
+			e.setCancelled(true);
 		}
 	}
 }

@@ -12,18 +12,16 @@ import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 
 public class Commands implements Listener {
-
-	@EventHandler(ignoreCancelled=true)
+	@EventHandler(ignoreCancelled = true)
 	public void onPlayerCommand(PlayerCommandPreprocessEvent e) {
-		
 		Player player = e.getPlayer();
 		Location loc = e.getPlayer().getLocation();
 		boolean resadmin = Residence.isResAdminOn(player);
-		
+
 		ClaimedResidence res = Residence.getResidenceManager().getByLoc(loc);
 		String playername = player.getName();
-		
-		if (res != null && !res.getPermissions() .playerHas(playername, "commands", true) && !resadmin) {
+
+		if (res != null && !res.getPermissions().playerHas(playername, "commands", true) && !resadmin) {
 			ResFlags.sendMsg(e.getPlayer(), "commands");
 			e.setCancelled(true);
 		}

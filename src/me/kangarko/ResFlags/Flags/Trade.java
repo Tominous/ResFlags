@@ -13,24 +13,19 @@ import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 
 public class Trade implements Listener {
-
-	@EventHandler(ignoreCancelled=true)
+	@EventHandler(ignoreCancelled = true)
 	public void onPlayerInteract(PlayerInteractEntityEvent e) {
-		
 		Entity entity = e.getRightClicked();
-		
+
 		if (entity.getType() == EntityType.VILLAGER) {
-			
 			Player player = e.getPlayer();
 			ClaimedResidence res = Residence.getResidenceManager().getByLoc(e.getPlayer().getLocation());
 			boolean resadmin = Residence.isResAdminOn(player);
 			String playername = player.getName();
-			
-			if (res != null) {
-				if (!res.getPermissions().playerHas(playername, "trade", true) && !resadmin) {
-					ResFlags.sendMsg(e.getPlayer(), "trade");
-					e.setCancelled(true);
-				}
+
+			if (res != null && !res.getPermissions().playerHas(playername, "trade", true) && !resadmin) {
+				ResFlags.sendMsg(e.getPlayer(), "trade");
+				e.setCancelled(true);
 			}
 		}
 	}
