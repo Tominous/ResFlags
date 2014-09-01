@@ -30,5 +30,6 @@ messages:
   trade: "%prefix You cannot trade here!"
   vehicledestroy: "%prefix You cannot destroy vehicles here!"
   frameprotect: "&cYou dont have permission for this."
+  cake: "%prefix Na interakciu v tejto residencii nemate povolenie."
   
 prefix: "&4[&cResidence&4]&c"

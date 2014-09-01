@@ -17,37 +17,32 @@ import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 
 public class VehicleProtect implements Listener {
-
-	@EventHandler(ignoreCancelled=true)
-	public void onVehicleDestroy(VehicleDestroyEvent e) {		
+	@EventHandler(ignoreCancelled = true)
+	public void onVehicleDestroy(VehicleDestroyEvent e) {
 		try {
 			Location loc = e.getVehicle().getLocation();
 			Entity attacker = e.getAttacker();
 			Vehicle vehicle = e.getVehicle();
-			Player player;
-			player = (Player) attacker;
+
+			Player player = (Player) attacker;
 			ClaimedResidence res = Residence.getResidenceManager().getByLoc(loc);
 			boolean resadmin = Residence.isResAdminOn(player);
-			
-			if (res != null) {
-				if (res.getPermissions().playerHas(player.getName(), "vehicleprotect", false) && !resadmin && (vehicle instanceof Minecart || vehicle instanceof Boat) && (attacker instanceof Player || attacker instanceof Monster)) {
-					ResFlags.sendMsg(player, "vehicledestroy");
-					e.setCancelled(true);
-				}
+
+			if (res != null && res.getPermissions().playerHas(player.getName(), "vehicleprotect", false) && !resadmin && (vehicle instanceof Minecart || vehicle instanceof Boat) && (attacker instanceof Player || attacker instanceof Monster)) {
+				ResFlags.sendMsg(player, "vehicledestroy");
+				e.setCancelled(true);
 			}
-		} catch (Exception ex) {
+		} catch (Exception localException) {
 		}
 	}
 
-	@EventHandler(ignoreCancelled=true)
+	@EventHandler(ignoreCancelled = true)
 	public void onVehicleDestroyEntity(VehicleDestroyEvent e) {
 		Location loc = e.getVehicle().getLocation();
 		ClaimedResidence res = Residence.getResidenceManager().getByLoc(loc);
-		
-		if (res != null) {
-			if (res.getPermissions().has("vehicleprotect", false) && (e.getVehicle() instanceof Minecart || e.getVehicle() instanceof Boat) && e.getAttacker() instanceof Monster) {
-				e.setCancelled(true);
-			}
+
+		if (res != null && res.getPermissions().has("vehicleprotect", false) && (e.getVehicle() instanceof Minecart || e.getVehicle() instanceof Boat) && e.getAttacker() instanceof Monster) {
+			e.setCancelled(true);
 		}
 	}
 }
