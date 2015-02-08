@@ -6,7 +6,6 @@ import me.kangarko.ResFlags.Flags.Commands;
 import me.kangarko.ResFlags.Flags.Drops;
 import me.kangarko.ResFlags.Flags.EnderPearl;
 import me.kangarko.ResFlags.Flags.Form;
-import me.kangarko.ResFlags.Flags.FrameProtect;
 import me.kangarko.ResFlags.Flags.Melt;
 import me.kangarko.ResFlags.Flags.MobKilling;
 import me.kangarko.ResFlags.Flags.Pickup;
@@ -84,8 +83,6 @@ public class ResFlags extends JavaPlugin {
 			FlagPermissions.addFlag("trade");
 			pm.registerEvents(new Trade(), this);
 		}
-
-		pm.registerEvents(new FrameProtect(), this);
 
 		FlagPermissions.addFlag("sapling");
 		pm.registerEvents(new Sapling(), this);
