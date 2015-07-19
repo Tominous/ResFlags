@@ -1,5 +1,12 @@
 package me.kangarko.ResFlags;
 
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import com.bekvon.bukkit.residence.protection.FlagPermissions;
+
 import me.kangarko.ResFlags.Flags.AnimalKilling;
 import me.kangarko.ResFlags.Flags.Cake;
 import me.kangarko.ResFlags.Flags.Commands;
@@ -14,20 +21,11 @@ import me.kangarko.ResFlags.Flags.Shear;
 import me.kangarko.ResFlags.Flags.Trade;
 import me.kangarko.ResFlags.Flags.VehicleProtect;
 
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import com.bekvon.bukkit.residence.protection.FlagPermissions;
-
 public class ResFlags extends JavaPlugin {
 	private static FileConfiguration config;
 
 	@Override
 	public void onEnable() {
-		if (getServer().getPluginManager().getPlugin("Residence") == null)
-			throw new NullPointerException("Failed to find Residence plugin!");
 		config = getConfig();
 
 		getConfig().options().copyDefaults(true);
@@ -87,12 +85,15 @@ public class ResFlags extends JavaPlugin {
 		FlagPermissions.addFlag("sapling");
 		pm.registerEvents(new Sapling(), this);
 		pm.registerEvents(new Cake(), this);
+		//pm.registerEvents(new Fly(), this);		
 	}
 
 	public static void sendMsg(Player pl, String str) {
 		String path = "messages." + str;
+		
 		if (config.getString(path) == null || config.getString(path).equalsIgnoreCase("none"))
 			return;
+		
 		pl.sendMessage(colorize(config.getString(path).replace("%prefix", config.getString("prefix"))));
 	}
 
