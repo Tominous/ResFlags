@@ -1,3 +1,12 @@
+<p align="center">
+  Do you want to easily code your own ResFlags?
+  <a href="https://www.spigotcourse.org/?utm_source=github&utm_medium=github">
+    <img src="https://i.imgur.com/Xr0p2g3.png" />
+  </a>
+</p>
+
+---
+
 ResFlags
 ========
 
