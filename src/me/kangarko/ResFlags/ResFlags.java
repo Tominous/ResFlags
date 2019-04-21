@@ -85,7 +85,7 @@ public class ResFlags extends JavaPlugin {
 		FlagPermissions.addFlag("sapling");
 		pm.registerEvents(new Sapling(), this);
 		pm.registerEvents(new Cake(), this);
-		//pm.registerEvents(new Fly(), this);		
+		pm.registerEvents(new Fly(), this);		
 	}
 
 	public static void sendMsg(Player pl, String str) {
